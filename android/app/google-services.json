@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "477867481850",
+    "firebase_url": "https://fir-counter-b53af-default-rtdb.firebaseio.com",
+    "project_id": "fir-counter-b53af",
+    "storage_bucket": "fir-counter-b53af.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:477867481850:android:d634b66c1e293cd25c4743",
+        "android_client_info": {
+          "package_name": "com.maanacademy.firebase_counter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "477867481850-2larjhuohik1nmg1pohqqu0rqlujnt6k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCa8gGuvR31Pk_h3KRN796EVTvL_fZ7nqk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "477867481850-2larjhuohik1nmg1pohqqu0rqlujnt6k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
