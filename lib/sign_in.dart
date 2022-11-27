@@ -1,5 +1,6 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_counter/add_student.dart';
 import 'package:firebase_counter/main.dart';
 import 'package:firebase_counter/sign_up.dart';
 import 'package:flutter/material.dart';
@@ -18,17 +19,10 @@ class _SignInState extends State<SignIn> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  void checkUser(){
-    if(FirebaseAuth.instance.currentUser!.uid.isEmptyOrNull){
-      EasyLoading.showInfo('User Found');
-    } else{
-      MyHomePage().launch(context);
-    }
-  }
+
 
   @override
   void initState() {
-    checkUser();
     super.initState();
   }
 
