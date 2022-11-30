@@ -2,10 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_counter/add_student.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
-final logInProvider = ChangeNotifierProvider((ref) => LogInRepo());
 
 class LogInRepo extends ChangeNotifier {
   String email = '';

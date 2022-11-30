@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:firebase_counter/Provider/student_provider.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -92,196 +94,214 @@ class _AddNewStudentState extends State<AddNewStudent> {
         title: Text('Add New Student'),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                height: 80.0,
-                width: 80.0,
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(60.0),
-                  image: imagePath == 'No Data' ? DecorationImage(image: NetworkImage(pictureUrl)) : DecorationImage(image: FileImage(imageFile)),
+      body: Consumer(builder: (_,ref,watch){
+        return Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  height: 80.0,
+                  width: 80.0,
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(60.0),
+                    image: imagePath == 'No Data' ? DecorationImage(image: NetworkImage(pictureUrl)) : DecorationImage(image: FileImage(imageFile)),
+                  ),
+                ).onTap(() => getImage()),
+                SizedBox(
+                  height: 10.0,
                 ),
-              ).onTap(() => getImage()),
-              SizedBox(
-                height: 10.0,
-              ),
-              AppTextField(
-                textFieldType: TextFieldType.NAME,
-                controller: studentNameEditingController,
-                decoration: InputDecoration(
-                  hintText: 'Enter Student Name',
-                  border: OutlineInputBorder(),
-                  labelText: 'Student Name',
-                ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              AppTextField(
-                textFieldType: TextFieldType.NAME,
-                controller: fathersNameEditingController,
-                decoration: InputDecoration(
-                  hintText: 'Enter Father\'s Name',
-                  border: OutlineInputBorder(),
-                  labelText: 'Father\'s Name',
-                ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              AppTextField(
-                textFieldType: TextFieldType.NAME,
-                controller: mothersNameEditingController,
-                decoration: InputDecoration(
-                  hintText: 'Enter Mother\'s Name',
-                  border: OutlineInputBorder(),
-                  labelText: 'Mother\'s Name',
-                ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              AppTextField(
-                textFieldType: TextFieldType.NAME,
-                readOnly: true,
-                controller: dateOfBirthEditingController,
-                decoration: InputDecoration(
-                    hintText: DateTime.now().toString().substring(0, 10),
+                AppTextField(
+                  textFieldType: TextFieldType.NAME,
+                  controller: studentNameEditingController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter Student Name',
                     border: OutlineInputBorder(),
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                    labelText: 'Date Of Birth',
-                    suffixIcon: Icon(Icons.calendar_month).onTap(() => showDatePicker(
+                    labelText: 'Student Name',
+                  ),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                AppTextField(
+                  textFieldType: TextFieldType.NAME,
+                  controller: fathersNameEditingController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter Father\'s Name',
+                    border: OutlineInputBorder(),
+                    labelText: 'Father\'s Name',
+                  ),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                AppTextField(
+                  textFieldType: TextFieldType.NAME,
+                  controller: mothersNameEditingController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter Mother\'s Name',
+                    border: OutlineInputBorder(),
+                    labelText: 'Mother\'s Name',
+                  ),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                AppTextField(
+                  textFieldType: TextFieldType.NAME,
+                  readOnly: true,
+                  controller: dateOfBirthEditingController,
+                  decoration: InputDecoration(
+                      hintText: DateTime.now().toString().substring(0, 10),
+                      border: const OutlineInputBorder(),
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      labelText: 'Date Of Birth',
+                      suffixIcon: const Icon(Icons.calendar_month).onTap(() async{
+                        var date = await showDatePicker(
                           context: context,
                           initialDate: DateTime.now(),
                           firstDate: DateTime(1950),
                           lastDate: DateTime.now(),
-                        ))),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              AppTextField(
-                textFieldType: TextFieldType.NAME,
-                controller: rollNumberEditingController,
-                decoration: InputDecoration(
-                  hintText: 'Enter Student Roll',
-                  border: OutlineInputBorder(),
-                  labelText: 'Student Roll',
+                        );
+                        setState(() {
+                          dateOfBirthEditingController.text = date.toString().substring(0,10);
+                        });
+                      })),
                 ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              AppTextField(
-                textFieldType: TextFieldType.NAME,
-                controller: studentIdEditingController,
-                decoration: InputDecoration(
-                  hintText: 'Enter Student ID',
-                  border: OutlineInputBorder(),
-                  labelText: 'Student ID',
+                SizedBox(
+                  height: 10.0,
                 ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              AppTextField(
-                textFieldType: TextFieldType.NAME,
-                controller: studentInstituteEditingController,
-                decoration: InputDecoration(
-                  hintText: 'Enter Student Institute Name',
-                  border: OutlineInputBorder(),
-                  labelText: 'Institute Name',
-                ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              AppTextField(
-                textFieldType: TextFieldType.NAME,
-                controller: studentGroupEditingController,
-                decoration: InputDecoration(
-                  hintText: 'Enter Student Group',
-                  border: OutlineInputBorder(),
-                  labelText: 'Student Group',
-                ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              AppTextField(
-                textFieldType: TextFieldType.NAME,
-                controller: studentBloodGroupEditingController,
-                decoration: InputDecoration(
-                  hintText: 'Enter Student Blood group',
-                  border: OutlineInputBorder(),
-                  labelText: 'Student Blood Group',
-                ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              AppTextField(
-                textFieldType: TextFieldType.NAME,
-                controller: studentClassNameEditingController,
-                decoration: InputDecoration(
-                  hintText: 'Enter Student Class Name',
-                  border: OutlineInputBorder(),
-                  labelText: 'Student Class Name',
-                ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              Container(
-                width: context.width(),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5.0),
-                  border: Border.all(color: Colors.grey),
-                ),
-                child: SizedBox(
-                  height: 55,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 5.0),
-                    child: DropdownButtonHideUnderline(child: getLanguages()),
+                AppTextField(
+                  textFieldType: TextFieldType.NAME,
+                  controller: rollNumberEditingController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter Student Roll',
+                    border: OutlineInputBorder(),
+                    labelText: 'Student Roll',
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              AppTextField(
-                textFieldType: TextFieldType.NAME,
-                controller: studentContactEditingController,
-                decoration: InputDecoration(
-                  hintText: 'Enter Student Emergency Contact Number',
-                  border: OutlineInputBorder(),
-                  labelText: 'Student Contact Number',
+                SizedBox(
+                  height: 10.0,
                 ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              ElevatedButton(
-                  onPressed: () async {
-                    StudentInformationModel model = StudentInformationModel(
+                AppTextField(
+                  textFieldType: TextFieldType.NAME,
+                  controller: studentIdEditingController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter Student ID',
+                    border: OutlineInputBorder(),
+                    labelText: 'Student ID',
+                  ),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                AppTextField(
+                  textFieldType: TextFieldType.NAME,
+                  controller: studentInstituteEditingController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter Student Institute Name',
+                    border: OutlineInputBorder(),
+                    labelText: 'Institute Name',
+                  ),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                AppTextField(
+                  textFieldType: TextFieldType.NAME,
+                  controller: studentGroupEditingController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter Student Group',
+                    border: OutlineInputBorder(),
+                    labelText: 'Student Group',
+                  ),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                AppTextField(
+                  textFieldType: TextFieldType.NAME,
+                  controller: studentBloodGroupEditingController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter Student Blood group',
+                    border: OutlineInputBorder(),
+                    labelText: 'Student Blood Group',
+                  ),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                AppTextField(
+                  textFieldType: TextFieldType.NAME,
+                  controller: studentClassNameEditingController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter Student Class Name',
+                    border: OutlineInputBorder(),
+                    labelText: 'Student Class Name',
+                  ),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Container(
+                  width: context.width(),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5.0),
+                    border: Border.all(color: Colors.grey),
+                  ),
+                  child: SizedBox(
+                    height: 55,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 5.0),
+                      child: DropdownButtonHideUnderline(child: getLanguages()),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                AppTextField(
+                  textFieldType: TextFieldType.NAME,
+                  controller: studentContactEditingController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter Student Emergency Contact Number',
+                    border: OutlineInputBorder(),
+                    labelText: 'Student Contact Number',
+                  ),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                ElevatedButton(
+                    onPressed: () async {
+                      StudentInformationModel model = StudentInformationModel(
                         studentName: studentNameEditingController.text,
                         fathersName: fathersNameEditingController.text,
                         mothersName: mothersNameEditingController.text,
+                        dateOfBirth: dateOfBirthEditingController.text,
+                        rollNumber: rollNumberEditingController.text,
+                        studentId: studentIdEditingController.text,
+                        studentGroup: studentGroupEditingController.text,
+                        instituteName: studentInstituteEditingController.text,
+                        emergencyContactNumber: studentContactEditingController.text,
+                        bloodGroup: studentBloodGroupEditingController.text,
+                        className: studentClassNameEditingController.text,
                         language: initialLanguage,
-                        pictureUrl: pictureUrl);
-                    await FirebaseDatabase.instance.ref('Student Information').push().set(model.toJson()).then((value) {
-                      EasyLoading.showSuccess('Done');
-                    });
-                  },
-                  child: Text('Save')),
-            ],
+                        pictureUrl: pictureUrl,
+
+                      );
+                      await FirebaseDatabase.instance.ref('Student Information').push().set(model.toJson()).then((value) {
+                        EasyLoading.showSuccess('Done');
+                        ref.refresh(studentProvider);
+                      });
+                    },
+                    child: Text('Save')),
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }

@@ -26,6 +26,7 @@ class StudentInformationModel {
     this.instituteName,
     this.pictureUrl,
     this.studentGroup,
+    this.bloodGroup,
     this.className,
     this.language,
     this.emergencyContactNumber
@@ -41,6 +42,7 @@ class StudentInformationModel {
     instituteName = json['instituteName'];
     pictureUrl = json['pictureUrl'];
     studentGroup = json['studentGroup'];
+    bloodGroup = json['bloodGroup'];
     className = json['className'];
     language = json['language'];
     emergencyContactNumber = json['emergencyContactNumber'];
@@ -58,6 +60,7 @@ class StudentInformationModel {
     map['instituteName'] = instituteName;
     map['pictureUrl'] = pictureUrl;
     map['studentGroup'] = studentGroup;
+    map['bloodGroup'] = bloodGroup;
     map['className'] = className;
     map['language'] = language;
     map['emergencyContactNumber'] = emergencyContactNumber;

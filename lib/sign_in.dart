@@ -8,6 +8,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import 'Provider/login_provider.dart';
 import 'Repositories/login_repo.dart';
 
 class SignIn extends StatefulWidget {
