@@ -68,19 +68,6 @@ class _SignUpState extends State<SignUp> {
               height: 10.0,
             ),
             AppTextField(
-              textFieldType: TextFieldType.PHONE,
-              controller: phoneController,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-                  hintText: 'Please Enter Your Phone Number',
-                  labelText: 'Phone',
-                  filled: true,
-                  fillColor: Colors.white),
-            ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            AppTextField(
               textFieldType: TextFieldType.PASSWORD,
               controller: passwordController,
               decoration: InputDecoration(
@@ -108,13 +95,13 @@ class _SignUpState extends State<SignUp> {
             ),
             Container(
               width: double.infinity,
-              padding: EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(20.0),
               decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.circular(10.0)),
               child: Center(
                   child: Text(
                 'Sign Up',
                 style: TextStyle(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold),
-              )),
+              ),),
             ).onTap(() async{
               try {
                 EasyLoading.show(status: 'Signing Up...');

@@ -37,14 +37,20 @@ class _AddNewStudentState extends State<AddNewStudent> {
   TextEditingController studentContactEditingController = TextEditingController();
 
   List<String> languages = ['English', 'Bangla'];
-  String? pictureUrl;
+  String pictureUrl =
+      'https://firebasestorage.googleapis.com/v0/b/maanpos.appspot.com/o/Customer%20Picture%2FNo_Image_Available.jpeg?alt=media&token=3de0d45e-0e4a-4a7b-b115-9d6722d5031f';
 
   final ImagePicker _picker = ImagePicker();
   XFile? image;
   File imageFile = File('No Data');
+  String imagePath = 'No Data';
 
   void getImage() async {
     final image = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      imageFile = File(image?.path ?? 'No Data');
+      imagePath = image?.path ?? 'No Data';
+    });
     EasyLoading.show(status: 'Uploading Image');
     await FirebaseStorage.instance.ref('Students Picture').child(DateTime.now().microsecondsSinceEpoch.toString()).putFile(File(image!.path)).then((val) async {
       EasyLoading.showSuccess('Upload Done');
@@ -91,10 +97,14 @@ class _AddNewStudentState extends State<AddNewStudent> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              CircleAvatar(
-                radius: 70.0,
-                backgroundColor: Colors.grey,
-                child: imageFile == File('No Data') ? Icon(Icons.camera) : Image.file(imageFile!),
+              Container(
+                height: 80.0,
+                width: 80.0,
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(60.0),
+                  image: imagePath == 'No Data' ? DecorationImage(image: NetworkImage(pictureUrl)) : DecorationImage(image: FileImage(imageFile)),
+                ),
               ).onTap(() => getImage()),
               SizedBox(
                 height: 10.0,
@@ -140,7 +150,7 @@ class _AddNewStudentState extends State<AddNewStudent> {
                 readOnly: true,
                 controller: dateOfBirthEditingController,
                 decoration: InputDecoration(
-                    hintText: DateTime.now().toString().substring(0,10),
+                    hintText: DateTime.now().toString().substring(0, 10),
                     border: OutlineInputBorder(),
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                     labelText: 'Date Of Birth',
@@ -255,12 +265,19 @@ class _AddNewStudentState extends State<AddNewStudent> {
               SizedBox(
                 height: 10.0,
               ),
-              ElevatedButton(onPressed: ()async{
-                StudentInformationModel model = StudentInformationModel(studentName: studentNameEditingController.text,fathersName: fathersNameEditingController.text,mothersName: mothersNameEditingController.text,language: initialLanguage,pictureUrl: pictureUrl);
-                await FirebaseDatabase.instance.ref('Student Information').push().set(model.toJson()).then((value){
-                  EasyLoading.showSuccess('Done');
-                });
-              }, child: Text('Save')),
+              ElevatedButton(
+                  onPressed: () async {
+                    StudentInformationModel model = StudentInformationModel(
+                        studentName: studentNameEditingController.text,
+                        fathersName: fathersNameEditingController.text,
+                        mothersName: mothersNameEditingController.text,
+                        language: initialLanguage,
+                        pictureUrl: pictureUrl);
+                    await FirebaseDatabase.instance.ref('Student Information').push().set(model.toJson()).then((value) {
+                      EasyLoading.showSuccess('Done');
+                    });
+                  },
+                  child: Text('Save')),
             ],
           ),
         ),

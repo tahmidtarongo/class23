@@ -3,16 +3,18 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_counter/add_student.dart';
 import 'package:firebase_counter/firebase_options.dart';
 import 'package:firebase_counter/sign_in.dart';
+import 'package:firebase_counter/splash_screen.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform
   );
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const AddNewStudent(),
+      home: const SplashScreen(),
       builder: EasyLoading.init(),
     );
   }
