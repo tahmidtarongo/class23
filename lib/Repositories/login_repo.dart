@@ -3,6 +3,8 @@ import 'package:firebase_counter/add_student.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import '../student_list.dart';
+
 
 
 class LogInRepo extends ChangeNotifier {
@@ -19,7 +21,7 @@ class LogInRepo extends ChangeNotifier {
         Future.delayed(const Duration(milliseconds: 500), () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const AddNewStudent()),
+            MaterialPageRoute(builder: (context) => const StudentList()),
           );
         });
       }

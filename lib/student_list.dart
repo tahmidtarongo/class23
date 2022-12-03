@@ -1,6 +1,7 @@
 import 'package:firebase_counter/Model/students_model.dart';
 import 'package:firebase_counter/Provider/student_provider.dart';
 import 'package:firebase_counter/add_student.dart';
+import 'package:firebase_counter/student_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -68,6 +69,7 @@ class StudetCard extends StatelessWidget {
         ),
       ),
       child: ListTile(
+        onTap: () => StudentInfo(studentInformationModel: student).launch(context),
         leading: CircleAvatar(
           backgroundColor: Colors.blue,
           backgroundImage: NetworkImage(student.pictureUrl ?? pictureUrl),
