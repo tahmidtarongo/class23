@@ -1,5 +1,7 @@
 import 'package:firebase_counter/Model/students_model.dart';
+import 'package:firebase_counter/edit_students.dart';
 import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 
 class StudentInfo extends StatefulWidget {
@@ -22,13 +24,28 @@ class _StudentInfoState extends State<StudentInfo> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.studentInformationModel.studentName.toString()),
+        actions:[
+          Padding(
+            padding: EdgeInsets.only(right: 10.0),
+            child: Icon(Icons.edit,color: Colors.white,),
+          ).onTap(() => EditStudents(studentInformationModel: widget.studentInformationModel).launch(context)),
+        Padding(
+          padding: const EdgeInsets.only(right: 10.0),
+          child: Icon(Icons.delete_forever_outlined,color: Colors.white,),
+        ),
+        ],
       ),
       body: Column(
         children: [
-          CircleAvatar(
-            backgroundColor: Colors.blue,
-            backgroundImage: NetworkImage(widget.studentInformationModel.pictureUrl ?? pictureUrl),
+          Center(
+            child: CircleAvatar(
+              backgroundColor: Colors.blue,
+              radius: 70.0,
+              backgroundImage: NetworkImage(widget.studentInformationModel.pictureUrl ?? pictureUrl),
+            ),
           ),
+          const SizedBox(height: 10.0,),
+          Text(widget.studentInformationModel.studentName ?? '',style: const TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20.0),)
         ],
       ),
     );

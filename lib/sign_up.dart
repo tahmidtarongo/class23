@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_counter/sign_in.dart';
 import 'package:flutter/material.dart';
@@ -13,13 +12,11 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +31,7 @@ class _SignUpState extends State<SignUp> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Please Sign Up',
               style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 30.0),
             ),
@@ -45,11 +42,7 @@ class _SignUpState extends State<SignUp> {
               textFieldType: TextFieldType.NAME,
               controller: nameController,
               decoration: InputDecoration(
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-                  hintText: 'Please Enter Your Full Name',
-                  labelText: 'Name',
-                  filled: true,
-                  fillColor: Colors.white),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)), hintText: 'Please Enter Your Full Name', labelText: 'Name', filled: true, fillColor: Colors.white),
             ),
             const SizedBox(
               height: 10.0,
@@ -58,11 +51,7 @@ class _SignUpState extends State<SignUp> {
               textFieldType: TextFieldType.EMAIL,
               controller: emailController,
               decoration: InputDecoration(
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-                  hintText: 'Please Enter Your Email',
-                  labelText: 'Email Address',
-                  filled: true,
-                  fillColor: Colors.white),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)), hintText: 'Please Enter Your Email', labelText: 'Email Address', filled: true, fillColor: Colors.white),
             ),
             const SizedBox(
               height: 10.0,
@@ -71,11 +60,7 @@ class _SignUpState extends State<SignUp> {
               textFieldType: TextFieldType.PASSWORD,
               controller: passwordController,
               decoration: InputDecoration(
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-                  hintText: 'Please Enter Your password',
-                  labelText: 'Password',
-                  filled: true,
-                  fillColor: Colors.white),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)), hintText: 'Please Enter Your password', labelText: 'Password', filled: true, fillColor: Colors.white),
             ),
             const SizedBox(
               height: 10.0,
@@ -97,12 +82,13 @@ class _SignUpState extends State<SignUp> {
               width: double.infinity,
               padding: const EdgeInsets.all(20.0),
               decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.circular(10.0)),
-              child: Center(
-                  child: Text(
-                'Sign Up',
-                style: TextStyle(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold),
-              ),),
-            ).onTap(() async{
+              child: const Center(
+                child: Text(
+                  'Sign Up',
+                  style: TextStyle(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ).onTap(() async {
               try {
                 EasyLoading.show(status: 'Signing Up...');
                 final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
